@@ -1,0 +1,29 @@
+# Daily check that your site is up and its SSL certificate isn't about to expire.
+# Copy this file to .github/workflows/site-check.yml in your repository and change SITE.
+# The job fails, and GitHub emails you, when the site is down or the certificate has under 21 days left.
+name: Site check
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+env:
+  SITE: example.com
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Site is up
+        run: |
+          result=$(curl -s -X POST https://devpack.app/v1/status -H "content-type: application/json" -d "{\"url\":\"https://$SITE\"}")
+          echo "$result"
+          echo "$result" | grep -q '"up":true'
+
+      - name: Certificate has 21 days or more left
+        run: |
+          result=$(curl -s -X POST https://devpack.app/v1/ssl -H "content-type: application/json" -d "{\"domain\":\"$SITE\"}")
+          days=$(echo "$result" | grep -o '"daysLeft":[0-9-]*' | cut -d: -f2)
+          echo "Days left: $days"
+          [ -n "$days" ] && [ "$days" -ge 21 ]

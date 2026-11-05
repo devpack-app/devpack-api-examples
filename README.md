@@ -52,6 +52,9 @@ color = devpack("color", value="#2563eb")
 | [`python/devpack.py`](python/devpack.py) | The same client for Python |
 | [`python/quickstart.py`](python/quickstart.py) | The quickstart in Python |
 | [`python/ab_test.py`](python/ab_test.py) | An A/B test significance check |
+| [`javascript/ssl-expiry-monitor.mjs`](javascript/ssl-expiry-monitor.mjs) | Warns before SSL certificates expire, and fails CI when one needs renewing |
+| [`python/meta_report.py`](python/meta_report.py) | Exports page titles and descriptions to a CSV, with notes on what to fix |
+| [`github-actions/site-check.yml`](github-actions/site-check.yml) | A daily GitHub Actions check that your site is up and its certificate is valid |
 | [`tutorials/website-health-report.md`](tutorials/website-health-report.md) | A step-by-step tutorial |
 
 ## Endpoints
